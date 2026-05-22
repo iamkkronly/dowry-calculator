@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>💍 Dowry Calculator | Satirical Awareness Tool (Fixed + Max Features)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f7f0e6 0%, #e9dbcf 100%);
+      padding: 2rem 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .calculator-card {
+      max-width: 1600px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 2.5rem;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.35);
+      overflow: hidden;
+    }
+
+    .warning-header {
+      background: #2c2b28;
+      color: #f9e0a8;
+      padding: 1rem 2rem;
+      text-align: center;
+      border-bottom: 3px solid #d4af37;
+    }
+
+    .warning-header i {
+      margin-right: 8px;
+      color: #ffb347;
+    }
+
+    .title-section {
+      background: #fff6ef;
+      padding: 1.8rem 2rem 0.8rem;
+      text-align: center;
+      border-bottom: 1px solid #f0e2d4;
+    }
+
+    .title-section h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #b45f2b, #7a3e1a);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .sub {
+      color: #7e5a41;
+      margin-top: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1.8rem;
+      padding: 2rem;
+    }
+
+    .factor-panel {
+      background: #fefaf7;
+      border-radius: 1.8rem;
+      padding: 1.5rem;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+      border: 1px solid #f3e5db;
+    }
+
+    .factor-panel h3 {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #5c3e2b;
+      border-left: 5px solid #e2b178;
+      padding-left: 12px;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .input-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .input-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: #4f3a2c;
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    select, input[type="range"] {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 60px;
+      border: 1.5px solid #e6d5c8;
+      background: white;
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .value-badge {
+      background: #f2e5db;
+      padding: 6px 12px;
+      border-radius: 40px;
+      text-align: center;
+      font-weight: 600;
+      color: #6b3f1c;
+      font-size: 0.85rem;
+      margin-top: 8px;
+    }
+
+    .result-section {
+      background: linear-gradient(120deg, #fff0e4, #ffe6d9);
+      margin: 0 2rem 2rem;
+      border-radius: 2rem;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid #f3dac8;
+    }
+
+    .dowry-amount {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #2e241f, #5a3a28);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin: 0.5rem 0;
+    }
+
+    .dowry-meta {
+      background: #efe1d4;
+      display: inline-block;
+      padding: 4px 18px;
+      border-radius: 50px;
+      font-weight: 500;
+    }
+
+    .modifier-breakdown {
+      background: #fffaf5;
+      border-radius: 1.5rem;
+      padding: 1rem;
+      margin-top: 1rem;
+      text-align: left;
+      font-size: 0.75rem;
+    }
+
+    .badge-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin: 10px 0;
+    }
+
+    .badge {
+      background: #f0e2d4;
+      border-radius: 40px;
+      padding: 4px 12px;
+      font-weight: 500;
+    }
+
+    .reset-btn {
+      background: #2c2b28;
+      border: none;
+      color: #ffecce;
+      padding: 10px 24px;
+      border-radius: 60px;
+      cursor: pointer;
+      margin-top: 16px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
+    }
+
+    .reset-btn:hover {
+      background: #4f3926;
+      transform: scale(0.97);
+    }
+
+    footer {
+      background: #f6efe8;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.7rem;
+      color: #886b52;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 1rem; }
+      .dowry-amount { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="calculator-card">
+  <div class="warning-header">
+    <p><i class="fas fa-gavel"></i> <strong>⚖️ AWARENESS ZONE</strong> — Dowry is a crime under The Dowry Prohibition Act, 1961. This tool is a <strong>satirical critique</strong> of regressive stereotypes.</p>
+  </div>
+
+  <div class="title-section">
+    <h1><i class="fas fa-calculator"></i> Dowry Calculator (Satire + Max Features)</h1>
+    <div class="sub">🚫 Every slider & dropdown mocks regressive thinking — real marriages thrive on equality, not demands 🚫</div>
+  </div>
+
+  <div class="form-grid">
+    <!-- GROOM PANEL -->
+    <div class="factor-panel">
+      <h3><i class="fas fa-user-tie"></i> Groom's Profile</h3>
+      <div class="input-group">
+        <label><i class="fas fa-graduation-cap"></i> Education Level</label>
+        <select id="groomEdu">
+          <option value="highschool">High School / Below</option>
+          <option value="bachelor" selected>Bachelor's Degree</option>
+          <option value="master">Master's Degree</option>
+          <option value="phd">PhD / Professional</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-chart-line"></i> Annual Income (₹ LPA)</label>
+        <select id="groomIncome">
+          <option value="low">&lt;3 LPA</option>
+          <option value="medium" selected>3–6 LPA</option>
+          <option value="upper">6–10 LPA</option>
+          <option value="high">10–20 LPA</option>
+          <option value="elite">&gt;20 LPA</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-city"></i> Family Status (satire)</label>
+        <select id="groomStatus">
+          <option value="low">Working class</option>
+          <option value="middle" selected>Middle class</option>
+          <option value="upper">Upper middle class</option>
+          <option value="elite">Elite / Aristocratic</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-briefcase"></i> Profession (satire)</label>
+        <select id="groomProf">
+          <option value="govt">Government employee</option>
+          <option value="private" selected>Private sector</option>
+          <option value="business">Business owner</option>
+          <option value="abroad">Overseas job</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-ruler-combined"></i> Groom's Height (absurd)</label>
+        <select id="groomHeight">
+          <option value="short">Below 5'5"</option>
+          <option value="average" selected>5'5" - 5'10"</option>
+          <option value="tall">Above 5'10"</option>
+        </select>
+        <small>📏 Satirical: taller height "demands" more dowry</small>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-house-damage"></i> Groom's Existing Loans</label>
+        <select id="groomLoan">
+          <option value="none">No loans</option>
+          <option value="low">Small education loan</option>
+          <option value="high" selected>Home/car loan (₹20L+)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- BRIDE PANEL -->
+    <div class="factor-panel">
+      <h3><i class="fas fa-female"></i> Bride's Profile</h3>
+      <div class="input-group">
+        <label><i class="fas fa-graduation-cap"></i> Education Level</label>
+        <select id="brideEdu">
+          <option value="highschool">High School / Below</option>
+          <option value="bachelor" selected>Bachelor's Degree</option>
+          <option value="master">Master's Degree</option>
+          <option value="phd">PhD / Professional</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-briefcase"></i> Annual Income (₹ LPA)</label>
+        <select id="brideIncome">
+          <option value="verylow">&lt;2 LPA</option>
+          <option value="lowmid" selected>2–5 LPA</option>
+          <option value="mid">5–10 LPA</option>
+          <option value="high">&gt;10 LPA</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-hand-sparkles"></i> "Homemaking" (mock)</label>
+        <select id="homemaking">
+          <option value="basic">Basic skills</option>
+          <option value="skilled" selected>Skilled homemaker</option>
+          <option value="expert">Expert (chef+manager)</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-star"></i> Appearance (absurd)</label>
+        <select id="appearance">
+          <option value="low">Average</option>
+          <option value="medium" selected>Attractive</option>
+          <option value="high">Very beautiful</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-utensils"></i> Cooking Skills (mock)</label>
+        <select id="cooking">
+          <option value="basic">Basic cooking</option>
+          <option value="skilled" selected>Excellent home cook</option>
+          <option value="expert">Professional chef level</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-laptop-code"></i> Digital Skills</label>
+        <select id="digitalSkills">
+          <option value="basic">Basic computer knowledge</option>
+          <option value="skilled" selected>Advanced / Working professional</option>
+          <option value="expert">Tech expert / Entrepreneur</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- FAMILY & LIABILITIES -->
+    <div class="factor-panel">
+      <h3><i class="fas fa-landmark"></i> Bride's Family & Liabilities</h3>
+      <div class="input-group">
+        <label><i class="fas fa-coins"></i> Family Assets (₹ Lakhs)</label>
+        <input type="range" id="wealthSlider" min="0" max="250" value="40" step="5">
+        <div class="value-badge"><i class="fas fa-rupee-sign"></i> <span id="wealthVal">40</span> Lakhs</div>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-users"></i> Bride's siblings</label>
+        <select id="siblings">
+          <option value="0">0 (only child)</option>
+          <option value="1" selected>1 sibling</option>
+          <option value="2">2 siblings</option>
+          <option value="3">3+ siblings</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-notes-medical"></i> Dependents / liabilities</label>
+        <select id="liabilities">
+          <option value="none">None</option>
+          <option value="low">One dependent parent</option>
+          <option value="medium" selected>Two elderly dependents</option>
+          <option value="high">Multiple dependents / debt</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-star-of-life"></i> Astrology (mock)</label>
+        <select id="astrology">
+          <option value="bad">Poor matching</option>
+          <option value="average" selected>Average</option>
+          <option value="good">Excellent matching</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-church"></i> Religious Rituals (extra)</label>
+        <select id="rituals">
+          <option value="none">Standard rituals</option>
+          <option value="elaborate" selected>Elaborate ceremonies (+extra)</option>
+          <option value="grand">Grand multi-day events</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-guest"></i> Expected Wedding Guests</label>
+        <select id="guestCount">
+          <option value="small">Up to 200 guests</option>
+          <option value="medium" selected>200–500 guests</option>
+          <option value="large">500–1000 guests</option>
+          <option value="mega">1000+ guests</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- EXTRA DEMANDS (FIXED ADD-ONS) -->
+    <div class="factor-panel">
+      <h3><i class="fas fa-gem"></i> Groom's "Expectations" (add-ons)</h3>
+      <div class="input-group">
+        <label><i class="fas fa-car"></i> Luxury car demand</label>
+        <select id="carDemand">
+          <option value="none">None</option>
+          <option value="basic">₹5 Lakh car</option>
+          <option value="luxury" selected>₹12 Lakh sedan</option>
+          <option value="premium">₹25 Lakh SUV</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-motorcycle"></i> Premium Bike demand</label>
+        <select id="bikeDemand">
+          <option value="0">No bike</option>
+          <option value="150000">₹1.5 Lakh (commuter)</option>
+          <option value="300000" selected>₹3 Lakh (Royal Enfield)</option>
+          <option value="800000">₹8 Lakh (superbike)</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-ring"></i> Gold (grams)</label>
+        <input type="range" id="goldSlider" min="0" max="250" value="40" step="5">
+        <div class="value-badge"><i class="fas fa-weight-hanging"></i> <span id="goldVal">40</span> g = ₹<span id="goldPrice">0</span></div>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-building"></i> Property demand</label>
+        <select id="propertyDemand">
+          <option value="none">None</option>
+          <option value="1bhk">1 BHK (₹25 Lakh)</option>
+          <option value="2bhk" selected>2 BHK (₹45 Lakh)</option>
+          <option value="3bhk">3 BHK Villa (₹80 Lakh)</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-tv"></i> Electronics & furniture</label>
+        <select id="electronics">
+          <option value="0">None</option>
+          <option value="200000">Basic package (₹2L)</option>
+          <option value="500000" selected>Premium package (₹5L)</option>
+          <option value="1000000">Luxury smart home (₹10L)</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-money-bill-wave"></i> Extra cash (₹ Lakhs)</label>
+        <input type="range" id="cashDemand" min="0" max="30" value="5" step="1">
+        <div class="value-badge"><i class="fas fa-rupee-sign"></i> <span id="cashVal">5</span> Lakhs</div>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-plane"></i> Destination wedding/honeymoon</label>
+        <select id="weddingExtras">
+          <option value="0">Local wedding</option>
+          <option value="250000">₹2.5 Lakh (Goa)</option>
+          <option value="500000" selected>₹5 Lakh (Thailand)</option>
+          <option value="1000000">₹10 Lakh (Europe)</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-globe"></i> Foreign settlement / visa</label>
+        <select id="foreignDemand">
+          <option value="0">No demand</option>
+          <option value="1000000">₹10 Lakh (visa + initial)</option>
+          <option value="2500000">₹25 Lakh (PR / citizenship)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-section">
+    <div class="result-label"><i class="fas fa-chart-line"></i> SATIRICAL DOWRY AMOUNT</div>
+    <div class="dowry-amount" id="dowryDisplay">₹ 0</div>
+    <div class="dowry-meta" id="tagline"></div>
+    
+    <div class="modifier-breakdown">
+      <div class="badge-container" id="badgeList"></div>
+      <div id="percentTotal" style="font-weight:700; margin: 6px 0;">📊 Total % adjustment: 0%</div>
+      <div id="fixedBreakdown"></div>
+      <div id="formulaNote" style="font-size:0.7rem; margin-top:8px;"></div>
+    </div>
+    <button class="reset-btn" id="resetBtn"><i class="fas fa-undo-alt"></i> Reset to typical values</button>
+    <div style="font-size:0.65rem; margin-top:12px; opacity:0.7;"><i class="fas fa-info-circle"></i> Base dowry ₹5,00,000 + percentage modifiers (satirical) + fixed add-ons. Every factor mocks regressive thinking – dowry is illegal.</div>
+  </div>
+
+  <footer>
+    <i class="fas fa-balance-scale"></i> Dowry is a crime. This is an awareness tool, not an endorsement. Say no to dowry, celebrate equality.
+  </footer>
+</div>
+
+<script>
+  // ======================== DOM ELEMENTS ========================
+  const groomEdu = document.getElementById('groomEdu');
+  const groomIncome = document.getElementById('groomIncome');
+  const groomStatus = document.getElementById('groomStatus');
+  const groomProf = document.getElementById('groomProf');
+  const groomHeight = document.getElementById('groomHeight');
+  const groomLoan = document.getElementById('groomLoan');
+  const brideEdu = document.getElementById('brideEdu');
+  const brideIncome = document.getElementById('brideIncome');
+  const homemaking = document.getElementById('homemaking');
+  const appearance = document.getElementById('appearance');
+  const cooking = document.getElementById('cooking');
+  const digitalSkills = document.getElementById('digitalSkills');
+  const wealthSlider = document.getElementById('wealthSlider');
+  const wealthValSpan = document.getElementById('wealthVal');
+  const siblings = document.getElementById('siblings');
+  const liabilities = document.getElementById('liabilities');
+  const astrology = document.getElementById('astrology');
+  const rituals = document.getElementById('rituals');
+  const guestCount = document.getElementById('guestCount');
+  const carDemand = document.getElementById('carDemand');
+  const bikeDemand = document.getElementById('bikeDemand');
+  const goldSlider = document.getElementById('goldSlider');
+  const goldValSpan = document.getElementById('goldVal');
+  const goldPriceSpan = document.getElementById('goldPrice');
+  const propertyDemand = document.getElementById('propertyDemand');
+  const electronics = document.getElementById('electronics');
+  const cashDemand = document.getElementById('cashDemand');
+  const cashValSpan = document.getElementById('cashVal');
+  const weddingExtras = document.getElementById('weddingExtras');
+  const foreignDemand = document.getElementById('foreignDemand');
+  const dowryDisplay = document.getElementById('dowryDisplay');
+  const taglineSpan = document.getElementById('tagline');
+  const badgeList = document.getElementById('badgeList');
+  const percentTotalSpan = document.getElementById('percentTotal');
+  const fixedBreakdownSpan = document.getElementById('fixedBreakdown');
+  const formulaNoteSpan = document.getElementById('formulaNote');
+  const resetBtn = document.getElementById('resetBtn');
+
+  // constants
+  const BASE_DOWRY = 500000;          // ₹5,00,000
+  const GOLD_RATE = 6500;             // per gram
+
+  // ======================== PERCENTAGE MODIFIER MAPS ========================
+  const groomEduMap = { highschool: 12, bachelor: 0, master: -6, phd: -12 };
+  const groomIncomeMap = { low: 18, medium: 0, upper: -8, high: -15, elite: -22 };
+  const groomStatusMap = { low: -5, middle: 0, upper: 8, elite: 18 };
+  const groomProfMap = { govt: 5, private: 0, business: 10, abroad: 15 };
+  const groomHeightMap = { short: -8, average: 0, tall: 10 };
+  const groomLoanMap = { none: 0, low: 8, high: 18 };
+  const brideEduMap = { highschool: 22, bachelor: 0, master: -12, phd: -20 };
+  const brideIncomeMap = { verylow: 20, lowmid: 0, mid: -12, high: -22 };
+  const homemakingMap = { basic: 8, skilled: 0, expert: -10 };
+  const appearanceMap = { low: 12, medium: 0, high: -8 };
+  const cookingMap = { basic: 5, skilled: 0, expert: -12 };
+  const digitalSkillsMap = { basic: 5, skilled: 0, expert: -12 };
+  const siblingsMap = { '0': 8, '1': 0, '2': -8, '3': -15 };
+  const liabilitiesMap = { none: -5, low: 0, medium: 8, high: 18 };
+  const astrologyMap = { bad: 15, average: 0, good: -10 };
+  const ritualsMap = { none: 0, elaborate: 10, grand: 22 };
+  const guestMap = { small: 0, medium: 5, large: 12, mega: 20 };
+
+  function getWealthMod(wealthLakhs) {
+    if (wealthLakhs < 15) return -12;
+    if (wealthLakhs < 40) return 0;
+    if (wealthLakhs < 100) return 12;
+    if (wealthLakhs < 180) return 22;
+    return 32;
+  }
+
+  // ======================== FIXED ADD-ON VALUES (₹) ========================
+  function getCarValue(carType) {
+    const vals = { none: 0, basic: 500000, luxury: 1200000, premium: 2500000 };
+    return vals[carType] || 0;
+  }
+  function getPropertyValue(propType) {
+    const vals = { none: 0, '1bhk': 2500000, '2bhk': 4500000, '3bhk': 8000000 };
+    return vals[propType] || 0;
+  }
+  function getGoldValue(grams) { return grams * GOLD_RATE; }
+  function getCashValue(lakhs) { return lakhs * 100000; }
+  function getWeddingValue(val) { return parseInt(val) || 0; }
+  function getForeignValue(val) { return parseInt(val) || 0; }
+  function getBikeValue(val) { return parseInt(val) || 0; }
+  function getElectronicsValue(val) { return parseInt(val) || 0; }
+
+  // ======================== MASTER UPDATE ========================
+  function updateAll() {
+    // ---- read values ----
+    const gEdu = groomEdu.value;
+    const gInc = groomIncome.value;
+    const gStat = groomStatus.value;
+    const gProf = groomProf.value;
+    const gHeight = groomHeight.value;
+    const gLoan = groomLoan.value;
+    const bEdu = brideEdu.value;
+    const bInc = brideIncome.value;
+    const home = homemaking.value;
+    const look = appearance.value;
+    const cook = cooking.value;
+    const digital = digitalSkills.value;
+    const wealthLakhs = parseFloat(wealthSlider.value);
+    const sib = siblings.value;
+    const liab = liabilities.value;
+    const astro = astrology.value;
+    const ritual = rituals.value;
+    const guest = guestCount.value;
+    const car = carDemand.value;
+    const bike = bikeDemand.value;
+    const goldG = parseFloat(goldSlider.value);
+    const prop = propertyDemand.value;
+    const electro = electronics.value;
+    const cashL = parseFloat(cashDemand.value);
+    const wedding = weddingExtras.value;
+    const foreign = foreignDemand.value;
+
+    // update live displays
+    wealthValSpan.innerText = wealthLakhs;
+    goldValSpan.innerText = goldG;
+    const goldAmount = getGoldValue(goldG);
+    goldPriceSpan.innerText = goldAmount.toLocaleString('en-IN');
+    cashValSpan.innerText = cashL;
+
+    // ---- percentage modifiers ----
+    const modGEdu = groomEduMap[gEdu] || 0;
+    const modGInc = groomIncomeMap[gInc] || 0;
+    const modGStat = groomStatusMap[gStat] || 0;
+    const modGProf = groomProfMap[gProf] || 0;
+    const modGHeight = groomHeightMap[gHeight] || 0;
+    const modGLoan = groomLoanMap[gLoan] || 0;
+    const modBEdu = brideEduMap[bEdu] || 0;
+    const modBInc = brideIncomeMap[bInc] || 0;
+    const modHome = homemakingMap[home] || 0;
+    const modLook = appearanceMap[look] || 0;
+    const modCook = cookingMap[cook] || 0;
+    const modDigital = digitalSkillsMap[digital] || 0;
+    const modWealth = getWealthMod(wealthLakhs);
+    const modSib = siblingsMap[sib] || 0;
+    const modLiab = liabilitiesMap[liab] || 0;
+    const modAstro = astrologyMap[astro] || 0;
+    const modRitual = ritualsMap[ritual] || 0;
+    const modGuest = guestMap[guest] || 0;
+
+    const totalPercent = modGEdu + modGInc + modGStat + modGProf + modGHeight + modGLoan +
+                         modBEdu + modBInc + modHome + modLook + modCook + modDigital +
+                         modWealth + modSib + modLiab + modAstro + modRitual + modGuest;
+    let afterPercent = BASE_DOWRY * (1 + totalPercent / 100);
+    if (afterPercent < 0) afterPercent = 0;
+
+    // ---- fixed add-ons ----
+    const carAmount = getCarValue(car);
+    const bikeAmount = getBikeValue(bike);
+    const propertyAmount = getPropertyValue(prop);
+    const goldAmountFixed = goldAmount;
+    const electronicsAmount = getElectronicsValue(electro);
+    const cashAmount = getCashValue(cashL);
+    const weddingAmount = getWeddingValue(wedding);
+    const foreignAmount = getForeignValue(foreign);
+    const totalFixed = carAmount + bikeAmount + propertyAmount + goldAmountFixed + electronicsAmount + cashAmount + weddingAmount + foreignAmount;
+
+    let finalDowry = Math.round(afterPercent + totalFixed);
+    if (finalDowry < 0) finalDowry = 0;
+
+    // format display
+    const formatted = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(finalDowry);
+    dowryDisplay.innerHTML = formatted;
+
+    // tagline
+    let tagline = "";
+    if (finalDowry === 0) tagline = "✨ ZERO DOWRY — EQUALITY CHAMPION ✨";
+    else if (finalDowry < 200000) tagline = "💖 Very low (ideal progressive)";
+    else if (finalDowry < 600000) tagline = "🤔 Moderate — still regressive";
+    else if (finalDowry < 1200000) tagline = "⚠️ High dowry expectation — illegal!";
+    else if (finalDowry < 2500000) tagline = "🔥 EXTREME & CRIMINAL 🔥";
+    else tagline = "💀 ABSURD — dowry destroys lives 💀";
+    taglineSpan.innerText = tagline;
+
+    // badges (all modifiers)
+    badgeList.innerHTML = `
+      <span class="badge">👨‍🎓 Groom Edu: ${modGEdu>0?'+':''}${modGEdu}%</span>
+      <span class="badge">💰 Groom Inc: ${modGInc>0?'+':''}${modGInc}%</span>
+      <span class="badge">🏛️ Status: ${modGStat>0?'+':''}${modGStat}%</span>
+      <span class="badge">💼 Prof: ${modGProf>0?'+':''}${modGProf}%</span>
+      <span class="badge">📏 Height: ${modGHeight>0?'+':''}${modGHeight}%</span>
+      <span class="badge">💸 Loan: ${modGLoan>0?'+':''}${modGLoan}%</span>
+      <span class="badge">👩‍🎓 Bride Edu: ${modBEdu>0?'+':''}${modBEdu}%</span>
+      <span class="badge">💼 Bride Inc: ${modBInc>0?'+':''}${modBInc}%</span>
+      <span class="badge">🍳 Homemaking: ${modHome>0?'+':''}${modHome}%</span>
+      <span class="badge">✨ Appearance: ${modLook>0?'+':''}${modLook}%</span>
+      <span class="badge">🍲 Cooking: ${modCook>0?'+':''}${modCook}%</span>
+      <span class="badge">💻 Digital: ${modDigital>0?'+':''}${modDigital}%</span>
+      <span class="badge">🏡 Wealth: ${modWealth>0?'+':''}${modWealth}%</span>
+      <span class="badge">👧 Siblings: ${modSib>0?'+':''}${modSib}%</span>
+      <span class="badge">⚖️ Liabilities: ${modLiab>0?'+':''}${modLiab}%</span>
+      <span class="badge">🔮 Astrology: ${modAstro>0?'+':''}${modAstro}%</span>
+      <span class="badge">🕯️ Rituals: ${modRitual>0?'+':''}${modRitual}%</span>
+      <span class="badge">👥 Guests: ${modGuest>0?'+':''}${modGuest}%</span>
+    `;
+    percentTotalSpan.innerHTML = `📈 Total % adjustment: ${totalPercent > 0 ? '+' : ''}${totalPercent}% → Base after % = ${new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(afterPercent)}`;
+
+    const formattedCar = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(carAmount);
+    const formattedBike = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(bikeAmount);
+    const formattedProp = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(propertyAmount);
+    const formattedGold = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(goldAmountFixed);
+    const formattedElectro = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(electronicsAmount);
+    const formattedCash = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(cashAmount);
+    const formattedWedding = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(weddingAmount);
+    const formattedForeign = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(foreignAmount);
+    fixedBreakdownSpan.innerHTML = `🚗 Car: ${formattedCar} &nbsp;| 🏍️ Bike: ${formattedBike} &nbsp;| 🏠 Property: ${formattedProp} &nbsp;| 💍 Gold: ${formattedGold} &nbsp;| 📺 Electronics: ${formattedElectro} &nbsp;| 💵 Cash: ${formattedCash} &nbsp;| ✈️ Wedding: ${formattedWedding} &nbsp;| 🌍 Foreign: ${formattedForeign}`;
+    formulaNoteSpan.innerHTML = `🧾 Base ₹5,00,000 + ${totalPercent}% = ${new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(afterPercent)} + fixed add-ons = ${formatted}`;
+
+    // color feedback
+    if (finalDowry > 1500000) {
+      dowryDisplay.style.background = "linear-gradient(135deg, #b13e3e, #8b2c2c)";
+      dowryDisplay.style.webkitBackgroundClip = "text";
+    } else if (finalDowry === 0) {
+      dowryDisplay.style.background = "linear-gradient(135deg, #2a7a3b, #1c6b2f)";
+      dowryDisplay.style.webkitBackgroundClip = "text";
+    } else {
+      dowryDisplay.style.background = "linear-gradient(135deg, #2e241f, #5a3a28)";
+      dowryDisplay.style.webkitBackgroundClip = "text";
+    }
+  }
+
+  // reset to sensible typical values
+  function resetDefaults() {
+    groomEdu.value = 'bachelor';
+    groomIncome.value = 'medium';
+    groomStatus.value = 'middle';
+    groomProf.value = 'private';
+    groomHeight.value = 'average';
+    groomLoan.value = 'high';
+    brideEdu.value = 'bachelor';
+    brideIncome.value = 'lowmid';
+    homemaking.value = 'skilled';
+    appearance.value = 'medium';
+    cooking.value = 'skilled';
+    digitalSkills.value = 'skilled';
+    wealthSlider.value = '40';
+    siblings.value = '1';
+    liabilities.value = 'medium';
+    astrology.value = 'average';
+    rituals.value = 'elaborate';
+    guestCount.value = 'medium';
+    carDemand.value = 'luxury';
+    bikeDemand.value = '300000';
+    goldSlider.value = '40';
+    propertyDemand.value = '2bhk';
+    electronics.value = '500000';
+    cashDemand.value = '5';
+    weddingExtras.value = '500000';
+    foreignDemand.value = '0';
+    wealthValSpan.innerText = '40';
+    goldValSpan.innerText = '40';
+    goldPriceSpan.innerText = (40 * GOLD_RATE).toLocaleString('en-IN');
+    cashValSpan.innerText = '5';
+    updateAll();
+  }
+
+  // attach event listeners to all inputs
+  const allInputs = [
+    groomEdu, groomIncome, groomStatus, groomProf, groomHeight, groomLoan,
+    brideEdu, brideIncome, homemaking, appearance, cooking, digitalSkills,
+    wealthSlider, siblings, liabilities, astrology, rituals, guestCount,
+    carDemand, bikeDemand, goldSlider, propertyDemand, electronics,
+    cashDemand, weddingExtras, foreignDemand
+  ];
+  allInputs.forEach(el => el.addEventListener('input', updateAll));
+  allInputs.forEach(el => el.addEventListener('change', updateAll));
+  resetBtn.addEventListener('click', resetDefaults);
+
+  // initial call
+  updateAll();
+</script>
+</body>
+</html>
